@@ -2,27 +2,25 @@ import factoryDeviceService from '../services/factoryDevices'
 
 const factoryDeviceReducer = (state = [], action) => {
   switch (action.type) {
-  case 'INIT_factoryDeviceS':
-    return action.data.sort((a, b) => b.likes - a.likes)
-  case 'NEW_factoryDevice':
+  case 'ALL_FACTORYDEVICES':
+    return action.data
+  case 'NEW_FACTORYDEVICE':
     return state.concat(action.data)
-  case 'UPDATE_factoryDevice':
+  case 'UPDATE_FACTORYDEVICE':
     return state
-      .map(factoryDevice => factoryDevice.id === action.data.id ? action.data : factoryDevice)
-      .sort((a, b) => b.likes - a.likes)
-  case 'DELETE_factoryDevice':
+  case 'DELETE_FACTORYDEVICE':
     return state.filter(factoryDevice => factoryDevice.id !== action.data)
   default:
     return state
   }
 }
 
-export const initializefactoryDevices = () => {
+export const getAllFactoryDevices = () => {
   return async dispatch => {
     const factoryDevices = await factoryDeviceService.getAll()
 
     dispatch({
-      type: 'INIT_factoryDeviceS',
+      type: 'ALL_FACTORYDEVICES',
       data: factoryDevices
     })
   }
@@ -33,20 +31,8 @@ export const createfactoryDevice = content => {
     const newfactoryDevice = await factoryDeviceService.create(content)
 
     dispatch({
-      type: 'NEW_factoryDevice',
+      type: 'NEW_FACTORYDEVICE',
       data: newfactoryDevice
-    })
-  }
-}
-
-export const addLike = factoryDevice => {
-  return async dispatch => {
-    const newfactoryDevice = { ...factoryDevice, likes: factoryDevice.likes + 1 }
-    const updatedfactoryDevice = await factoryDeviceService.update(factoryDevice.id, newfactoryDevice)
-
-    dispatch({
-      type: 'UPDATE_factoryDevice',
-      data: updatedfactoryDevice
     })
   }
 }
@@ -56,19 +42,8 @@ export const removefactoryDevice = id => {
     await factoryDeviceService.deletefactoryDevice(id)
 
     dispatch({
-      type: 'DELETE_factoryDevice',
+      type: 'DELETE_FACTORYDEVICE',
       data: id
-    })
-  }
-}
-
-export const addComment = (id, comment) => {
-  return async dispatch => {
-    const updatedfactoryDevice = await factoryDeviceService.createComment(id, comment)
-
-    dispatch({
-      type: 'UPDATE_factoryDevice',
-      data: updatedfactoryDevice
     })
   }
 }

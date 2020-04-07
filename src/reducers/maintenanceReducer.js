@@ -1,76 +1,53 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import maintenanceService from '../services/maintenances'
 
-export const FETCHMAINTENANCEBEGIN = 'FETCHMAINTENANCEBEGIN';
-export const FETCHMAINTENANCESUCCESS = 'FETCHMAINTENANCESUCCESS';
-export const FETCHMAINTENANCEFAILURE = 'FETCHMAINTENANCEFAILURE';
-
-export const fetchMaintenanceBegin = () => ({
-    type: FETCHMAINTENANCEBEGIN
-});
-
-
-export const fetchMaintenanceSuccess = maintenances => ({
-    type: FETCHMAINTENANCESUCCESS,
-    payload: {
-        maintenances
-    }
-});
-
-
-export const fetchMaintenanceError = error => ({
-    type: FETCHMAINTENANCEFAILURE,
-    payload: {
-        error
-    }
-});
-
-const maintenanceReducer = (state = [], action)=>{
-    switch(action.type){
-      case FETCHMAINTENANCEBEGIN:
-        return{
-          ...state,
-        }
-      
-      case FETCHMAINTENANCESUCCESS:
-        return{
-          ...state,
-          devices: action.payload
-        }
-      
-      case FETCHMAINTENANCEFAILURE:
-        return{
-          ...state,
-          error: action.error
-        }
-      default:
-        return state;
-      
-    }
-
+const maintenanceReducer = (state = [], action) => {
+  switch (action.type) {
+  case 'ALL_MAINTENANCES':
+    return action.data
+  case 'NEW_MAINTENANCE':
+    return state.concat(action.data)
+  case 'UPDATE_MAINTENANCE':
+    return state
+  case 'DELETE_MAINTENANCE':
+    return state.filter(maintenance => maintenance.id !== action.data)
+  default:
+    return state
+  }
 }
 
+export const getAllMaintenances = () => {
+  return async dispatch => {
+    const maintenances = await maintenanceService.getAll()
 
-export const findAll = () => {
-    return dispatch => {
-        dispatch(fetchMaintenanceBegin());
-        return fetch("/maintenances")
-          .then(handleErrors)
-          .then(res => res.json())
-          .then(json => {
-            dispatch(fetchMaintenanceSuccess(json.products));
-            return json.products;
-          })
-          .catch(error => dispatch(fetchMaintenanceError(error)));
-      };
+    dispatch({
+      type: 'ALL_MAINTENANCES',
+      data: maintenances
+    })
+  }
 }
 
-function handleErrors(response) {
-    if (!response.ok) {
-      throw Error(response.statusText);
-    }
-    return response;
+export const createMaintenance = (content) => {
+  return async dispatch => {
+    const newMaintenance = await maintenanceService.create(content)
+
+    dispatch({
+      type: 'NEW_MAINTENANCE',
+      data: newMaintenance
+    })
+  }
 }
 
+export const removeMaintenance = id => {
+    console.log(id)
+  return async dispatch => {
+    console.log(id)
+    const maintenance = await maintenanceService.deleteMaintenance(id)
+    console.log(id)
+    dispatch({
+      type: 'DELETE_MAINTENANCE',
+      data: id
+    })
+  }
+}
 
 export default maintenanceReducer
