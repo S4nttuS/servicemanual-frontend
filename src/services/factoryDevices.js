@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/factorydevices'
+const baseUrl = 'http://localhost:8080/factorydevices'
 
 const getAll = () => {
   const request = axios.get(baseUrl)

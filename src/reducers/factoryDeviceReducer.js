@@ -37,9 +37,9 @@ export const createfactoryDevice = content => {
   }
 }
 
-export const removefactoryDevice = id => {
+export const deleteFactoryDevice = id => {
   return async dispatch => {
-    await factoryDeviceService.deletefactoryDevice(id)
+    await factoryDeviceService.deleteFactoryDevice(id)
 
     dispatch({
       type: 'DELETE_FACTORYDEVICE',

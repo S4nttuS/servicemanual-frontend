@@ -29,7 +29,7 @@ export const getAllMaintenances = () => {
 export const createMaintenance = (content) => {
   return async dispatch => {
     const newMaintenance = await maintenanceService.create(content)
-
+    
     dispatch({
       type: 'NEW_MAINTENANCE',
       data: newMaintenance
@@ -37,12 +37,10 @@ export const createMaintenance = (content) => {
   }
 }
 
-export const removeMaintenance = id => {
-    console.log(id)
+export const deleteMaintenance = id => {
   return async dispatch => {
-    console.log(id)
-    const maintenance = await maintenanceService.deleteMaintenance(id)
-    console.log(id)
+    await maintenanceService.deleteMaintenance(id)
+    
     dispatch({
       type: 'DELETE_MAINTENANCE',
       data: id

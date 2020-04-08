@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/maintenances'
+const baseUrl = 'http://localhost:8080/maintenances'
 
 const getAll = () => {
   const request = axios.get(baseUrl)
@@ -7,7 +7,9 @@ const getAll = () => {
 }
 
 const create = async newObject => {
+  console.log(newObject)
   const response = await axios.post(`${baseUrl}/add`, newObject)
+  console.log(response)
   return response.data
 }
 
