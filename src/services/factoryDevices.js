@@ -16,9 +16,9 @@ const update = async (id, newObject) => {
   return response.data
 }
 
-const deletefactoryDevice = async id => {
+const deleteFactoryDevice = async id => {
   const response = await axios.delete(`${baseUrl}/delete/${id}`)
   return response.data
 }
 
-export default { getAll, create, update, deletefactoryDevice }
+export default { getAll, create, update, deleteFactoryDevice }

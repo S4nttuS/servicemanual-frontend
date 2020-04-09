@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { deleteMaintenance } from '../reducers/maintenanceReducer'
 
-const Maintenance = ({maintenance}) => {
+const Maintenance = ({maintenance, deleteMaintenance}) => {
   const handleDelete = () => {
     if (window.confirm(`Delete maintenance job ${maintenance.id}?`) === true) {
       console.log(`Deleting a maintenance job ${maintenance.id}`)

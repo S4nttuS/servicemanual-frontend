@@ -15,6 +15,7 @@ const MaintenanceForm = ({createMaintenance}) => {
   const handleCreate = async (event) => {
     event.preventDefault()
     console.log('Adding a new maintenance job.')
+    
     const maintenanceObject = {
       deviceId: deviceId.value,
       entryDate: entryDate.value,
@@ -22,7 +23,7 @@ const MaintenanceForm = ({createMaintenance}) => {
       criticality: criticality.value,
       status: status.value
     }
-    console.log(maintenanceObject)
+
     await createMaintenance(maintenanceObject)
     deviceId.reset()
     entryDate.reset()
