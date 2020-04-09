@@ -27,7 +27,7 @@ export const getAllFactoryDevices = () => {
   }
 }
 
-export const createFactoryDevice = (content) => {
+export const createFactoryDevice = content => {
   return async dispatch => {
     const newFactoryDevice = await factoryDeviceService.create(content)
 
@@ -38,7 +38,7 @@ export const createFactoryDevice = (content) => {
   }
 }
 
-export const updateFactoryDevice = (content) => {
+export const updateFactoryDevice = content => {
   console.log(content)
   return async dispatch => {
     const editedFactoryDevice = await factoryDeviceService.update(content)

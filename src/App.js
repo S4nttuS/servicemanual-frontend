@@ -1,21 +1,30 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import { Container, Header, Divider, Dropdown } from 'semantic-ui-react'
 import { getAllFactoryDevices } from './reducers/factoryDeviceReducer'
-import { getAllMaintenances } from './reducers/maintenanceReducer'
-import MaintenanceTable from './components/MaintenanceTable'
-import MaintenanceForm from './components/MaintenanceForm'
+import { getAllMaintenances, getMaintenancesByDeviceId } from './reducers/maintenanceReducer'
+
 import FactoryDeviceTable from './components/FactoryDeviceTable'
 import FactoryDeviceForm from './components/FactoryDeviceForm'
-import { Container, Header, Divider } from 'semantic-ui-react'
+import MaintenanceTable from './components/MaintenanceTable'
+import MaintenanceForm from './components/MaintenanceForm'
 
 
 const App = (props) => {
+  const [dropdown, setDropdown] = useState('')
+
   useEffect(() => {
     props.getAllFactoryDevices()
     props.getAllMaintenances()
   }, [] )
 
-  console.log(props.factoryDevices)
+  const handleChange = (event, { value }) => {
+    setDropdown(value)
+    if (!props.factoryDevices.find(f => f.id === value))
+      props.getAllMaintenances()
+    else
+      props.getMaintenancesByDeviceId(value)
+  }
 
   return (
     <Container>
@@ -28,6 +37,18 @@ const App = (props) => {
       <Divider horizontal>&</Divider>
 
       <Header as="h2">Maintenance jobs</Header>
+      Find maintenance jobs for a device:
+      <Dropdown placeholder="id"
+        onChange={handleChange}
+        value={dropdown}
+        search 
+        selection
+        options={[{ text: "all", key: 0, value: 0 }].concat(
+          props.factoryDevices.map(f =>
+            f = { text: f.id, key: f.id, value: f.id })
+          )
+        }
+      />
       <MaintenanceTable maintenances={props.maintenances} />
       <MaintenanceForm />
     </Container>
@@ -47,6 +68,7 @@ export default connect(
   mapStateToProps,
   {
     getAllFactoryDevices,
-    getAllMaintenances
+    getAllMaintenances,
+    getMaintenancesByDeviceId
   }
 )(App)

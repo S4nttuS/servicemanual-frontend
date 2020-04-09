@@ -6,6 +6,11 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
+const getByDeviceId = async id => {
+  const request = axios.get(`${baseUrl}/findbydevice/${id}`)
+  return request.then(response => response.data)
+}
+
 const create = async newObject => {
   const response = await axios.post(`${baseUrl}/add`, newObject)
   return response.data
@@ -21,4 +26,4 @@ const deleteMaintenance = async id => {
   return response.data
 }
 
-export default { getAll, create, update, deleteMaintenance }
+export default { getAll, getByDeviceId, create, update, deleteMaintenance }

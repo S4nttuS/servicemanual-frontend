@@ -4,6 +4,8 @@ const maintenanceReducer = (state = [], action) => {
   switch (action.type) {
   case 'ALL_MAINTENANCES':
     return action.data
+  case 'ALL_MAINTENANCES_BY_DEVICE':
+    return action.data
   case 'NEW_MAINTENANCE':
     return state.concat(action.data)
   case 'UPDATE_MAINTENANCE':
@@ -27,7 +29,18 @@ export const getAllMaintenances = () => {
   }
 }
 
-export const createMaintenance = (content) => {
+export const getMaintenancesByDeviceId = id => {
+  return async dispatch => {
+    const maintenances = await maintenanceService.getByDeviceId(id)
+
+    dispatch({
+      type: 'ALL_MAINTENANCES_BY_DEVICE',
+      data: maintenances
+    })
+  }
+}
+
+export const createMaintenance = content => {
   return async dispatch => {
     const newMaintenance = await maintenanceService.create(content)
     
@@ -38,7 +51,7 @@ export const createMaintenance = (content) => {
   }
 }
 
-export const updateMaintenance = (content) => {
+export const updateMaintenance = content => {
   console.log(content)
   return async dispatch => {
     const editedMaintenance = await maintenanceService.update(content)
