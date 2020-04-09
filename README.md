@@ -7,7 +7,7 @@ This application adds a frontend to a backend project [servicemanual-java](https
 
 ## How to run this application
 
-Clone and start backend project, instructions can be found [here](https://github.com/S4nttuS/Servicemanual-java/tree/master/servicemanual-java).
+Clone and start backend project, instructions can be found [here](https://github.com/S4nttuS/Servicemanual-java/blob/master/servicemanual-java/README.md).
 
 Then cd into right directory of frontend project and use commands 
 ```npm install``` and ```npm start```
