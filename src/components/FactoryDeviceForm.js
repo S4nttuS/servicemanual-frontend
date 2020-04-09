@@ -1,9 +1,8 @@
 import React from 'react'
 import { createFactoryDevice } from '../reducers/factoryDeviceReducer'
-import { Form, Button } from 'semantic-ui-react'
+import { Form, Header, Button } from 'semantic-ui-react'
 import { useField } from '../hooks'
 import { connect } from 'react-redux'
-
 
 const FactoryDeviceForm = ({createFactoryDevice}) => {
   const name = useField('text')
@@ -28,17 +27,17 @@ const FactoryDeviceForm = ({createFactoryDevice}) => {
 
   return(
     <Form onSubmit = {handleCreate}>
-      <h3> Add a new factory device</h3>
+      <Header as="h3"> Add a new factory device</Header>
       <Form.Field>
-        <label>name</label>
+        <label>Name</label>
         <input id="name" {...name.bind}/>      
       </Form.Field>
       <Form.Field>
-        <label>type</label>
+        <label>Type</label>
         <input id="type" {...type.bind}/>      
       </Form.Field>
       <Form.Field>
-        <label>year</label>
+        <label>Year</label>
         <input id="year" {...year.bind}/>      
       </Form.Field>
       <Button type = "submit">Add</Button>

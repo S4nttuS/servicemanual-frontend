@@ -1,22 +1,21 @@
 import React from 'react'
 import { updateMaintenance } from '../reducers/maintenanceReducer'
-import { Form, Button } from 'semantic-ui-react'
+import { Form, Header, Button } from 'semantic-ui-react'
 import { useField } from '../hooks'
 import { connect } from 'react-redux'
 
-
 const MaintenanceEdit = ({ maintenance, updateMaintenance }) => {
-  const deviceId = useField('number')
-  const entryDate = useField('date')
-  const description = useField('text')
-  const criticality = useField('number')
-  const status = useField('number')
+  const deviceId = useField('number', maintenance.deviceId)
+  const entryDate = useField('date', maintenance.entryDate)
+  const description = useField('text', maintenance.description)
+  const criticality = useField('number', maintenance.criticality)
+  const status = useField('number', maintenance.status)
 
   const handleUpdate = async (event) => {
-    event.preventDefault()
-    console.log(`Updating maintenance job with id ${maintenance.id}.`)
+    console.log(`Updating a maintenance job.`)
     
     const maintenanceObject = {
+      id: maintenance.id,
       deviceId: deviceId.value,
       entryDate: entryDate.value,
       description: description.value,
@@ -30,32 +29,33 @@ const MaintenanceEdit = ({ maintenance, updateMaintenance }) => {
     description.reset()
     criticality.reset()
     status.reset()
+    window.location.reload();
   }
 
   return(
     <Form onSubmit = {handleUpdate}>
-      <h3> Update a maintenance job</h3>
+      <Header as="h3"> Update a maintenance job</Header>
       <Form.Field>
         <label>Device id</label>
-        <input id="deviceId" defaultValue={maintenance.deviceId} {...deviceId.bind} />      
+        <input id="deviceId"  {...deviceId.bind} />      
       </Form.Field>
       <Form.Field>
         <label>Entry date</label>
-        <input id="entryDate" {...entryDate.bind} value={maintenance.entryDate} />      
+        <input id="entryDate" {...entryDate.bind} />      
       </Form.Field>
       <Form.Field>
         <label>Description</label>
-        <input id="description" {...description.bind} value={maintenance.description} />      
+        <input id="description" {...description.bind} />      
       </Form.Field>
       <Form.Field>
         <label>Criticality</label>
-        <input id="criticality" {...criticality.bind} value={maintenance.criticality} />      
+        <input id="criticality" {...criticality.bind} />      
       </Form.Field>
       <Form.Field>
         <label>Status</label>
-        <input id="status" {...status.bind} value={maintenance.status} />      
+        <input id="status" {...status.bind} />      
       </Form.Field>
-      <Button type = "submit">Add</Button>
+      <Button type = "submit">Update</Button>
     </Form>
   )
 }

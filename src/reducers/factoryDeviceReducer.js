@@ -8,6 +8,7 @@ const factoryDeviceReducer = (state = [], action) => {
     return state.concat(action.data)
   case 'UPDATE_FACTORYDEVICE':
     return state
+      .map(factoryDevice => factoryDevice.id === action.data.id ? action.data : factoryDevice)
   case 'DELETE_FACTORYDEVICE':
     return state.filter(factoryDevice => factoryDevice.id !== action.data)
   default:
@@ -26,13 +27,25 @@ export const getAllFactoryDevices = () => {
   }
 }
 
-export const createFactoryDevice = content => {
+export const createFactoryDevice = (content) => {
   return async dispatch => {
-    const newfactoryDevice = await factoryDeviceService.create(content)
+    const newFactoryDevice = await factoryDeviceService.create(content)
 
     dispatch({
       type: 'NEW_FACTORYDEVICE',
-      data: newfactoryDevice
+      data: newFactoryDevice
+    })
+  }
+}
+
+export const updateFactoryDevice = (content) => {
+  console.log(content)
+  return async dispatch => {
+    const editedFactoryDevice = await factoryDeviceService.update(content)
+
+    dispatch ({
+      type: 'UPDATE_FACTORYDEVICE',
+      data: editedFactoryDevice
     })
   }
 }
@@ -40,7 +53,7 @@ export const createFactoryDevice = content => {
 export const deleteFactoryDevice = id => {
   return async dispatch => {
     await factoryDeviceService.deleteFactoryDevice(id)
-    
+
     dispatch({
       type: 'DELETE_FACTORYDEVICE',
       data: id

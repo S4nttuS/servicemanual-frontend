@@ -2,12 +2,12 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 
-import maintenanceReducer from './reducers/maintenanceReducer'
 import factoryDeviceReducer from './reducers/factoryDeviceReducer'
+import maintenanceReducer from './reducers/maintenanceReducer'
 
 const reducer = combineReducers({
     factoryDevices: factoryDeviceReducer,
-    maintenances: maintenanceReducer,
+    maintenances: maintenanceReducer
 })
 
 const store = createStore(

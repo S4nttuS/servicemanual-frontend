@@ -38,7 +38,8 @@ export const createMaintenance = (content) => {
   }
 }
 
-export const updateMaintenance = ( content) => {
+export const updateMaintenance = (content) => {
+  console.log(content)
   return async dispatch => {
     const editedMaintenance = await maintenanceService.update(content)
 

@@ -1,10 +1,9 @@
 import React from 'react'
 import Maintenance from '../components/Maintenance'
-import MaintenanceEdit from '../components/MaintenanceEdit'
 import { Table } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-const MaintenanceTable = ({maintenances}) => {
+const MaintenanceTable = ({ maintenances }) => {
   return (
     <Table>
       <Table.Header>
@@ -15,6 +14,7 @@ const MaintenanceTable = ({maintenances}) => {
           <Table.HeaderCell>Description</Table.HeaderCell>
           <Table.HeaderCell>Criticality</Table.HeaderCell>
           <Table.HeaderCell>Status</Table.HeaderCell>
+          <Table.HeaderCell></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -27,7 +27,6 @@ const MaintenanceTable = ({maintenances}) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     maintenances: state.maintenances
   }

@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { deleteMaintenance } from '../reducers/maintenanceReducer'
-import { Table, Button } from 'semantic-ui-react'
+import { Table, Button, Modal } from 'semantic-ui-react'
+import MaintenanceEdit from '../components/MaintenanceEdit'
 
-const Maintenance = ({maintenance, deleteMaintenance}) => {
+const Maintenance = ({ maintenance, deleteMaintenance }) => {
   const handleDelete = () => {
     if (window.confirm(`Delete maintenance job ${maintenance.id}?`) === true) {
       console.log(`Deleting a maintenance job ${maintenance.id}`)
@@ -31,7 +32,14 @@ const Maintenance = ({maintenance, deleteMaintenance}) => {
       <Table.Cell>
           {maintenance.status}
       </Table.Cell>
-      <Button onClick={handleDelete}>Delete</Button>
+      <Table.Cell>
+        <Modal trigger={<Button>Update</Button>}>
+          <Modal.Content>
+            <MaintenanceEdit maintenance={maintenance} />
+          </Modal.Content>
+        </Modal>
+        <Button secondary onClick={handleDelete}>Delete</Button>
+      </Table.Cell>
     </Table.Row>
   )
 }

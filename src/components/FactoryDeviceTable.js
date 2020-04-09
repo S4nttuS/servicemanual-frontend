@@ -1,10 +1,9 @@
 import React from 'react'
 import FactoryDevice from '../components/FactoryDevice'
-import FactoryDeviceEdit from '../components/FactoryDeviceEdit'
 import { Table } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-const FactoryDeviceTable = ({factoryDevices}) => {
+const FactoryDeviceTable = ({ factoryDevices }) => {
   return (
     <Table>
       <Table.Header>
@@ -13,6 +12,7 @@ const FactoryDeviceTable = ({factoryDevices}) => {
           <Table.HeaderCell>Name</Table.HeaderCell>
           <Table.HeaderCell>Type</Table.HeaderCell>
           <Table.HeaderCell>Year</Table.HeaderCell>
+          <Table.HeaderCell></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -25,7 +25,6 @@ const FactoryDeviceTable = ({factoryDevices}) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     factoryDevices: state.factoryDevices
   }

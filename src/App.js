@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { getAllFactoryDevices } from './reducers/factoryDeviceReducer'
 import { getAllMaintenances } from './reducers/maintenanceReducer'
-import FactoryDeviceForm from './components/FactoryDeviceForm'
-import MaintenanceForm from './components/MaintenanceForm'
 import MaintenanceTable from './components/MaintenanceTable'
+import MaintenanceForm from './components/MaintenanceForm'
 import FactoryDeviceTable from './components/FactoryDeviceTable'
-import { Container, Divider, Header } from 'semantic-ui-react'
+import FactoryDeviceForm from './components/FactoryDeviceForm'
+import { Container, Header, Divider } from 'semantic-ui-react'
 
 
 const App = (props) => {
@@ -18,10 +18,16 @@ const App = (props) => {
   console.log(props.factoryDevices)
 
   return (
-    <Container textAlign='justified'>
+    <Container>
       <Header as="h1">Servicemanual</Header>
+
+      <Header as="h2">Factory devices</Header>
       <FactoryDeviceTable factoryDevices={props.factoryDevices} />
       <FactoryDeviceForm />
+
+      <Divider horizontal>&</Divider>
+
+      <Header as="h2">Maintenance jobs</Header>
       <MaintenanceTable maintenances={props.maintenances} />
       <MaintenanceForm />
     </Container>
@@ -29,9 +35,11 @@ const App = (props) => {
 }
 
 const mapStateToProps = state => {
+  console.log(state)
   return {
     factoryDevices: state.factoryDevices,
-    maintenances: state.maintenances
+    maintenances: state.maintenances,
+    toggle: state.toggle
   }
 }
 

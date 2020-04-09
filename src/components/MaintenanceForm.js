@@ -1,9 +1,8 @@
 import React from 'react'
 import { createMaintenance } from '../reducers/maintenanceReducer'
-import { Form, Button } from 'semantic-ui-react'
+import { Form, Header, Button } from 'semantic-ui-react'
 import { useField } from '../hooks'
 import { connect } from 'react-redux'
-
 
 const MaintenanceForm = ({createMaintenance}) => {
   const deviceId = useField('number')
@@ -15,7 +14,7 @@ const MaintenanceForm = ({createMaintenance}) => {
   const handleCreate = async (event) => {
     event.preventDefault()
     console.log('Adding a new maintenance job.')
-    
+
     const maintenanceObject = {
       deviceId: deviceId.value,
       entryDate: entryDate.value,
@@ -34,7 +33,7 @@ const MaintenanceForm = ({createMaintenance}) => {
 
   return(
     <Form onSubmit = {handleCreate}>
-      <h3> Add a new maintenance job</h3>
+      <Header as="h3"> Add a new maintenance job</Header>
       <Form.Field>
         <label>Device id</label>
         <input id="deviceId" {...deviceId.bind}/>      
