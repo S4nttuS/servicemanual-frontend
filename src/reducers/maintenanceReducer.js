@@ -8,6 +8,7 @@ const maintenanceReducer = (state = [], action) => {
     return state.concat(action.data)
   case 'UPDATE_MAINTENANCE':
     return state
+      .map(maintenance => maintenance.id === action.data.id ? action.data : maintenance)
   case 'DELETE_MAINTENANCE':
     return state.filter(maintenance => maintenance.id !== action.data)
   default:
@@ -33,6 +34,17 @@ export const createMaintenance = (content) => {
     dispatch({
       type: 'NEW_MAINTENANCE',
       data: newMaintenance
+    })
+  }
+}
+
+export const updateMaintenance = ( content) => {
+  return async dispatch => {
+    const editedMaintenance = await maintenanceService.update(content)
+
+    dispatch ({
+      type: 'UPDATED_MAINTENANCE',
+      data: editedMaintenance
     })
   }
 }

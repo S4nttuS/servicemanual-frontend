@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { deleteFactoryDevice } from '../reducers/factoryDeviceReducer'
+import { Table, Button } from 'semantic-ui-react'
 
 const FactoryDevice = ({factoryDevice, deleteFactoryDevice}) => {
   const handleDelete = () => {
@@ -11,12 +12,21 @@ const FactoryDevice = ({factoryDevice, deleteFactoryDevice}) => {
   }
 
   return (
-    <div>
-      <div>
-        {factoryDevice.id} {factoryDevice.name} {factoryDevice.year} {factoryDevice.type}
-        <button onClick={handleDelete}>Delete</button>
-      </div>
-    </div>
+    <Table.Row>
+      <Table.Cell>
+          {factoryDevice.id}
+      </Table.Cell>
+      <Table.Cell>
+          {factoryDevice.name}
+      </Table.Cell>
+      <Table.Cell>
+          {factoryDevice.year}
+      </Table.Cell>
+      <Table.Cell>
+          {factoryDevice.type}
+      </Table.Cell>
+      <Button onClick={handleDelete}>Delete</Button>
+    </Table.Row>
   )
 }
 

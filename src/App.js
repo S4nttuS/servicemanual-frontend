@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { getAllFactoryDevices } from './reducers/factoryDeviceReducer'
 import { getAllMaintenances } from './reducers/maintenanceReducer'
@@ -6,9 +6,10 @@ import FactoryDeviceForm from './components/FactoryDeviceForm'
 import MaintenanceForm from './components/MaintenanceForm'
 import MaintenanceTable from './components/MaintenanceTable'
 import FactoryDeviceTable from './components/FactoryDeviceTable'
+import { Container, Divider, Header } from 'semantic-ui-react'
+
 
 const App = (props) => {
-
   useEffect(() => {
     props.getAllFactoryDevices()
     props.getAllMaintenances()
@@ -17,13 +18,13 @@ const App = (props) => {
   console.log(props.factoryDevices)
 
   return (
-    <div>
-      <h1>Servicemanual</h1>
+    <Container textAlign='justified'>
+      <Header as="h1">Servicemanual</Header>
       <FactoryDeviceTable factoryDevices={props.factoryDevices} />
       <FactoryDeviceForm />
       <MaintenanceTable maintenances={props.maintenances} />
       <MaintenanceForm />
-    </div>
+    </Container>
   )
 }
 

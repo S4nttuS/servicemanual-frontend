@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { deleteMaintenance } from '../reducers/maintenanceReducer'
+import { Table, Button } from 'semantic-ui-react'
 
 const Maintenance = ({maintenance, deleteMaintenance}) => {
   const handleDelete = () => {
@@ -11,14 +12,27 @@ const Maintenance = ({maintenance, deleteMaintenance}) => {
   }
 
   return (
-    <div>
-      <div id={maintenance.id}>
-        {maintenance.id} {maintenance.deviceId} {maintenance.entryDate} {maintenance.description}{maintenance.criticality}{maintenance.status}
-      
-        <button onClick={handleDelete}>Delete</button>
-      
-      </div>
-    </div>
+    <Table.Row>
+      <Table.Cell>
+          {maintenance.id}
+      </Table.Cell>
+      <Table.Cell>
+          {maintenance.deviceId}
+      </Table.Cell>
+      <Table.Cell>
+          {maintenance.entryDate}
+      </Table.Cell>
+      <Table.Cell>
+          {maintenance.description}
+      </Table.Cell>
+      <Table.Cell>
+          {maintenance.criticality}
+      </Table.Cell>
+      <Table.Cell>
+          {maintenance.status}
+      </Table.Cell>
+      <Button onClick={handleDelete}>Delete</Button>
+    </Table.Row>
   )
 }
 

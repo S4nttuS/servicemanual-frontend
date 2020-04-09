@@ -1,17 +1,38 @@
-import React from 'react';
+import React from 'react'
 import Maintenance from '../components/Maintenance'
-
+import MaintenanceEdit from '../components/MaintenanceEdit'
+import { Table } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
 const MaintenanceTable = ({maintenances}) => {
-    return (
-      <div>
+  return (
+    <Table>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>Id</Table.HeaderCell>
+          <Table.HeaderCell>Device id</Table.HeaderCell>
+          <Table.HeaderCell>Entry date</Table.HeaderCell>
+          <Table.HeaderCell>Description</Table.HeaderCell>
+          <Table.HeaderCell>Criticality</Table.HeaderCell>
+          <Table.HeaderCell>Status</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
         {maintenances.map(m =>
-          <div key={m.id}>  
-            <Maintenance maintenance={m}/>
-          </div>
+          <Maintenance key={m.id} maintenance={m} />
         )}
-      </div>
-    )
-  }
+      </Table.Body>
+    </Table>
+  )
+}
 
-  export default MaintenanceTable
+const mapStateToProps = (state) => {
+  console.log(state)
+  return {
+    maintenances: state.maintenances
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(MaintenanceTable)
