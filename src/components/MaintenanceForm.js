@@ -4,7 +4,7 @@ import { Form, Header, Button } from 'semantic-ui-react'
 import { useField } from '../hooks'
 import { connect } from 'react-redux'
 
-const MaintenanceForm = ({createMaintenance}) => {
+const MaintenanceForm = ({ createMaintenance }) => {
   const deviceId = useField('number')
   const entryDate = useField('date')
   const description = useField('text')

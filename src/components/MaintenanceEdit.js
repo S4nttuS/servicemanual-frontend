@@ -33,7 +33,7 @@ const MaintenanceEdit = ({ maintenance, updateMaintenance }) => {
   }
 
   return(
-    <Form onSubmit = {handleUpdate}>
+    <Form onSubmit={handleUpdate}>
       <Header as="h3"> Update a maintenance job</Header>
       <Form.Field>
         <label>Device id</label>

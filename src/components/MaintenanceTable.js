@@ -1,10 +1,41 @@
-import React from 'react'
+import React, {useState } from 'react'
 import Maintenance from '../components/Maintenance'
-import { Table } from 'semantic-ui-react'
+import { Table, Container, Header, Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import { getAllMaintenances, getMaintenancesByDeviceId } from '../reducers/maintenanceReducer'
 
-const MaintenanceTable = ({ maintenances }) => {
+const MaintenanceTable = ({
+  factoryDevices, 
+  maintenances, 
+  getAllMaintenances, 
+  getMaintenancesByDeviceId
+}) => {
+  const [dropdown, setDropdown] = useState('')
+
+  const handleChange = (event, { value }) => {
+    setDropdown(value)
+    if (!factoryDevices.find(f => f.id === value))
+      getAllMaintenances()
+    else
+      getMaintenancesByDeviceId(value)
+  }
+
   return (
+    <Container>
+      <Header as="h2">Maintenance jobs</Header>
+      Find maintenance jobs for a device: 
+      <Dropdown placeholder="id"
+        onChange={handleChange}
+        value={dropdown}
+        search 
+        selection
+        options={[{ text: "all", key: 0, value: 0 }].concat(
+          factoryDevices.map(f =>
+            f = { text: f.id, key: f.id, value: f.id })
+          )
+        }
+      />
+      
     <Table>
       <Table.Header>
         <Table.Row>
@@ -17,21 +48,26 @@ const MaintenanceTable = ({ maintenances }) => {
           <Table.HeaderCell></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
-      <Table.Body>
+      <Table.Body >
         {maintenances.map(m =>
           <Maintenance key={m.id} maintenance={m} />
         )}
       </Table.Body>
     </Table>
+    </Container>
   )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
+    factoryDevices: state.factoryDevices,
     maintenances: state.maintenances
   }
 }
 
-export default connect(
-  mapStateToProps
-)(MaintenanceTable)
+const mapDispatchToProps = {
+  getAllMaintenances,
+  getMaintenancesByDeviceId
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MaintenanceTable)

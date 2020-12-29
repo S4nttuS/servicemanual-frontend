@@ -27,7 +27,7 @@ const FactoryDeviceEdit = ({ factoryDevice, updateFactoryDevice }) => {
   }
 
   return(
-    <Form onSubmit = {handleUpdate}>
+    <Form onSubmit={handleUpdate}>
       <Header as="h3"> Update a factory device</Header>
       <Form.Field>
         <label>Name</label>

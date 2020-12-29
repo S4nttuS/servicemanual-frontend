@@ -1,74 +1,89 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Container, Header, Divider, Dropdown } from 'semantic-ui-react'
+import { Container, Header, Divider, Grid } from 'semantic-ui-react'
 import { getAllFactoryDevices } from './reducers/factoryDeviceReducer'
-import { getAllMaintenances, getMaintenancesByDeviceId } from './reducers/maintenanceReducer'
+import { getAllMaintenances } from './reducers/maintenanceReducer'
 
 import FactoryDeviceTable from './components/FactoryDeviceTable'
 import FactoryDeviceForm from './components/FactoryDeviceForm'
 import MaintenanceTable from './components/MaintenanceTable'
 import MaintenanceForm from './components/MaintenanceForm'
+import MaintenanceContainer from './components/MaintenanceContainer'
 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
-const App = (props) => {
-  const [dropdown, setDropdown] = useState('')
+const App = ({ getAllFactoryDevices, getAllMaintenances }) => {
+
+  const tabs = [{
+    link: '/',
+    title: 'Home',
+  },{
+    link: '/factorydevices',
+    title: 'Factory Devices'
+  },{
+    link: '/factorydevices/add',
+    title: 'Add a factory device'
+  },{
+    link: '/maintenances',
+    title: 'Maintenances'
+  },{
+    link: '/maintenances/add',
+    title: 'Add a maintenance'
+  }]
 
   useEffect(() => {
-    props.getAllFactoryDevices()
-    props.getAllMaintenances()
-  }, [] )
-
-  const handleChange = (event, { value }) => {
-    setDropdown(value)
-    if (!props.factoryDevices.find(f => f.id === value))
-      props.getAllMaintenances()
-    else
-      props.getMaintenancesByDeviceId(value)
-  }
+    getAllFactoryDevices()
+    getAllMaintenances()
+  }, [])
 
   return (
-    <Container>
-      <Header as="h1">Servicemanual</Header>
+    <Container style = {{position: "relative", top: "10%"}}>
+      
+      <Header as="h1" style={{paddingLeft: "41.5%", paddingTop: "1%"}}>Servicemanual</Header>
+      <Divider horizontal>-</Divider>
+      <Router>
+        <Grid container direction="row" style = {{ display: "flex", fontSize: 20, paddingBottom: "4%", paddingTop: '1%' }}>
+          {tabs.map(t => 
+            <Container key={t.link} style={{display: "flex", paddingTop: 3, width: "auto", height: 30, backgroundColor: "grey", borderRadius: 5 }}>
+              <Link style={{ color: "white" }} to={t.link}>{t.title}</Link>
+            </Container>
+          )}
+        </Grid>
 
-      <Header as="h2">Factory devices</Header>
-      <FactoryDeviceTable factoryDevices={props.factoryDevices} />
-      <FactoryDeviceForm />
-
-      <Divider horizontal>&</Divider>
-
-      <Header as="h2">Maintenance jobs</Header>
-      Find maintenance jobs for a device:
-      <Dropdown placeholder="id"
-        onChange={handleChange}
-        value={dropdown}
-        search 
-        selection
-        options={[{ text: "all", key: 0, value: 0 }].concat(
-          props.factoryDevices.map(f =>
-            f = { text: f.id, key: f.id, value: f.id })
-          )
-        }
-      />
-      <MaintenanceTable maintenances={props.maintenances} />
-      <MaintenanceForm />
+        <Switch>
+          <Route exact path="/">
+          </Route>
+          <Route exact path="/factorydevices">
+            <FactoryDeviceTable />
+          </Route>
+          <Route exact path="/factorydevices/add">
+            <FactoryDeviceForm />
+          </Route>
+          <Route exact path="/maintenances">
+            <MaintenanceTable />
+          </Route>
+          <Route exact path="/maintenances/add">
+            <MaintenanceForm />
+          </Route>
+          <Route exact path="/maintenances/:id">
+            <MaintenanceContainer />
+          </Route>
+        </Switch>
+      </Router>
+      
+      <Divider horizontal style = {{paddingTop: "4%"}}>-</Divider>
     </Container>
   )
 }
 
-const mapStateToProps = state => {
-  console.log(state)
-  return {
-    factoryDevices: state.factoryDevices,
-    maintenances: state.maintenances,
-    toggle: state.toggle
-  }
+const mapDispatchToProps = {
+  getAllFactoryDevices,
+  getAllMaintenances
 }
 
-export default connect(
-  mapStateToProps,
-  {
-    getAllFactoryDevices,
-    getAllMaintenances,
-    getMaintenancesByDeviceId
-  }
-)(App)
+export default connect(null, mapDispatchToProps)(App)
