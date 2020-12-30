@@ -4,6 +4,8 @@ const maintenanceReducer = (state = [], action) => {
   switch (action.type) {
   case 'ALL_MAINTENANCES':
     return action.data
+  case 'ALL_MAINTENANCES_PAGEABLE':
+    return action.data
   case 'ALL_MAINTENANCES_BY_DEVICE':
     return action.data
   case 'NEW_MAINTENANCE':
@@ -25,6 +27,17 @@ export const getAllMaintenances = () => {
     dispatch({
       type: 'ALL_MAINTENANCES',
       data: maintenances
+    })
+  }
+}
+
+export const getAllMaintenancesPageable = (page, items) => {
+  return async dispatch => {
+    const maintenances = await maintenanceService.getAllPageable(page, items)
+    
+    dispatch({
+      type: 'ALL_MAINTENANCES_PAGEABLE',
+      data: maintenances.content
     })
   }
 }

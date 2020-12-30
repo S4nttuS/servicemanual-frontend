@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Container, Header, Divider, Grid } from 'semantic-ui-react'
 import { getAllFactoryDevices } from './reducers/factoryDeviceReducer'
-import { getAllMaintenances } from './reducers/maintenanceReducer'
+import { getAllMaintenancesPageable } from './reducers/maintenanceReducer'
 
 import FactoryDeviceTable from './components/FactoryDeviceTable'
 import FactoryDeviceForm from './components/FactoryDeviceForm'
@@ -17,7 +17,7 @@ import {
   Link
 } from "react-router-dom";
 
-const App = ({ getAllFactoryDevices, getAllMaintenances }) => {
+const App = ({ getAllFactoryDevices, getAllMaintenancesPageable }) => {
 
   const tabs = [{
     link: '/',
@@ -38,7 +38,7 @@ const App = ({ getAllFactoryDevices, getAllMaintenances }) => {
 
   useEffect(() => {
     getAllFactoryDevices()
-    getAllMaintenances()
+    getAllMaintenancesPageable(0, 5)
   }, [])
 
   return (
@@ -83,7 +83,7 @@ const App = ({ getAllFactoryDevices, getAllMaintenances }) => {
 
 const mapDispatchToProps = {
   getAllFactoryDevices,
-  getAllMaintenances
+  getAllMaintenancesPageable
 }
 
 export default connect(null, mapDispatchToProps)(App)

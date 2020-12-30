@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { deleteMaintenance } from '../reducers/maintenanceReducer'
 import { Table, Button, Modal } from 'semantic-ui-react'
+import Moment from 'react-moment';
 import MaintenanceEdit from '../components/MaintenanceEdit'
 
 const Maintenance = ({ maintenance, deleteMaintenance }) => {
@@ -21,7 +22,7 @@ const Maintenance = ({ maintenance, deleteMaintenance }) => {
           {maintenance.deviceId}
       </Table.Cell>
       <Table.Cell>
-          {maintenance.entryDate}
+        <Moment format="DD.MM.YYYY">{maintenance.entryDate}</Moment>
       </Table.Cell>
       <Table.Cell>
           {maintenance.description}

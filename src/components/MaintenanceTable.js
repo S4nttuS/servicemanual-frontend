@@ -1,24 +1,37 @@
 import React, {useState } from 'react'
 import Maintenance from '../components/Maintenance'
-import { Table, Container, Header, Dropdown } from 'semantic-ui-react'
+import { Table, Container, Header, Dropdown, Input  } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { getAllMaintenances, getMaintenancesByDeviceId } from '../reducers/maintenanceReducer'
+import { getAllMaintenances, getMaintenancesByDeviceId, getAllMaintenancesPageable } from '../reducers/maintenanceReducer'
 
 const MaintenanceTable = ({
   factoryDevices, 
   maintenances, 
   getAllMaintenances, 
-  getMaintenancesByDeviceId
+  getMaintenancesByDeviceId,
+  getAllMaintenancesPageable
 }) => {
   const [dropdown, setDropdown] = useState('')
+  const [pageDropdown, setPageDropdown] = useState(5)
+  const [input, setInput] = useState(0)
 
-  const handleChange = (event, { value }) => {
+  const handleChange = (e, { value }) => {
     setDropdown(value)
     if (!factoryDevices.find(f => f.id === value))
       getAllMaintenances()
     else
       getMaintenancesByDeviceId(value)
   }
+
+  const handlePageChange = (e, {value}) => {
+    setPageDropdown(value)
+    getAllMaintenancesPageable(input, value)
+  }
+
+  const handleInputChange = (e) => {
+    setInput(e.target.value)
+    getAllMaintenancesPageable(e.target.value, pageDropdown)
+};
 
   return (
     <Container>
@@ -54,6 +67,23 @@ const MaintenanceTable = ({
         )}
       </Table.Body>
     </Table>
+
+    <Container>
+      <Dropdown
+        onChange={handlePageChange}
+        value={pageDropdown}
+        search
+        selection
+        options={[5, 10, 20, 50].map(p => p = { text: p, key: p, value: p })}
+      />
+      <Input
+        type="number"
+        onChange={(e) =>
+          handleInputChange(e)
+        }
+        value = {input}
+      />
+    </Container>
     </Container>
   )
 }
@@ -67,7 +97,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   getAllMaintenances,
-  getMaintenancesByDeviceId
+  getMaintenancesByDeviceId,
+  getAllMaintenancesPageable
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MaintenanceTable)

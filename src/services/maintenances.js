@@ -6,6 +6,13 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
+const getAllPageable = (page, items) => {
+  const querystring = require('querystring');
+  //const request = axios.get(baseUrl, querystring.stringify({ page: page, items: items }))
+  const request = axios.get(`${baseUrl}/paginated?page=${page}&items=${items}`)
+  return request.then(response => response.data)
+}
+
 const getByDeviceId = async id => {
   const request = axios.get(`${baseUrl}/findbydevice/${id}`)
   return request.then(response => response.data)
@@ -26,4 +33,4 @@ const deleteMaintenance = async id => {
   return response.data
 }
 
-export default { getAll, getByDeviceId, create, update, deleteMaintenance }
+export default { getAll, getAllPageable, getByDeviceId, create, update, deleteMaintenance }
