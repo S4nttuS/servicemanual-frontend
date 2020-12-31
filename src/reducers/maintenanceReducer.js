@@ -1,20 +1,21 @@
 import maintenanceService from '../services/maintenances'
 
-const maintenanceReducer = (state = [], action) => {
+const maintenanceReducer = (state = { maintenances: [], totalPages: 0 }, action) => {
   switch (action.type) {
   case 'ALL_MAINTENANCES':
-    return action.data
+    return { ...state, maintenances: action.data }
   case 'ALL_MAINTENANCES_PAGEABLE':
-    return action.data
+    return { maintenances: action.data.content, totalPages: action.data.totalPages }
   case 'ALL_MAINTENANCES_BY_DEVICE':
-    return action.data
+    return { ...state, maintenances: action.data }
   case 'NEW_MAINTENANCE':
-    return state.concat(action.data)
+    return { ...state, maintenances: state.maintenances.concat(action.data) }
   case 'UPDATE_MAINTENANCE':
-    return state
+    return { ...state, maintenances: state.maintenances
       .map(maintenance => maintenance.id === action.data.id ? action.data : maintenance)
+    }
   case 'DELETE_MAINTENANCE':
-    return state.filter(maintenance => maintenance.id !== action.data)
+    return { ...state, maintenances: state.maintenances.filter(maintenance => maintenance.id !== action.data) }
   default:
     return state
   }
@@ -31,13 +32,13 @@ export const getAllMaintenances = () => {
   }
 }
 
-export const getAllMaintenancesPageable = (page, items) => {
+export const getAllMaintenancesPageable = (page, items, deviceId) => {
   return async dispatch => {
-    const maintenances = await maintenanceService.getAllPageable(page, items)
-    
+    const maintenances = await maintenanceService.getAllPageable(page, items, deviceId)
+
     dispatch({
       type: 'ALL_MAINTENANCES_PAGEABLE',
-      data: maintenances.content
+      data: maintenances
     })
   }
 }

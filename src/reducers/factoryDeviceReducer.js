@@ -1,16 +1,19 @@
 import factoryDeviceService from '../services/factoryDevices'
 
-const factoryDeviceReducer = (state = [], action) => {
+const factoryDeviceReducer = (state = { factoryDevices: [], totalPages: 0, ids: [] }, action) => {
   switch (action.type) {
   case 'ALL_FACTORYDEVICES':
-    return action.data
+    return { ...state, ids: action.data.map(device => device.id )}
+  case 'ALL_FACTORYDEVICES_PAGEABLE':
+    return { ...state, factoryDevices: action.data.content, totalPages: action.data.totalPages }
   case 'NEW_FACTORYDEVICE':
-    return state.concat(action.data)
+    return { ...state, factoryDevices: action.data }
   case 'UPDATE_FACTORYDEVICE':
-    return state
+    return { ...state, factoryDevices: state.factoryDevices
       .map(factoryDevice => factoryDevice.id === action.data.id ? action.data : factoryDevice)
+    }
   case 'DELETE_FACTORYDEVICE':
-    return state.filter(factoryDevice => factoryDevice.id !== action.data)
+    return { ...state, factoryDevices: state.factoryDevices.filter(factoryDevice => factoryDevice.id !== action.data) }
   default:
     return state
   }
@@ -22,6 +25,17 @@ export const getAllFactoryDevices = () => {
 
     dispatch({
       type: 'ALL_FACTORYDEVICES',
+      data: factoryDevices
+    })
+  }
+}
+
+export const getAllFactoryDevicesPageable = (page, items) => {
+  return async dispatch => {
+    const factoryDevices = await factoryDeviceService.getAllPageable(page, items)
+
+    dispatch({
+      type: 'ALL_FACTORYDEVICES_PAGEABLE',
       data: factoryDevices
     })
   }

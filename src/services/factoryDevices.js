@@ -6,6 +6,11 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
+const getAllPageable = (page, items) => {
+  const request = axios.get(`${baseUrl}/paginated?page=${page-1}&items=${items}`)
+  return request.then(response => response.data)
+}
+
 const create = async newObject => {
   const response = await axios.post(`${baseUrl}/add`, newObject)
   return response.data
@@ -21,4 +26,4 @@ const deleteFactoryDevice = async id => {
   return response.data
 }
 
-export default { getAll, create, update, deleteFactoryDevice }
+export default { getAll, getAllPageable, create, update, deleteFactoryDevice }

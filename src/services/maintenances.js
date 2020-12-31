@@ -6,10 +6,8 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
-const getAllPageable = (page, items) => {
-  const querystring = require('querystring');
-  //const request = axios.get(baseUrl, querystring.stringify({ page: page, items: items }))
-  const request = axios.get(`${baseUrl}/paginated?page=${page}&items=${items}`)
+const getAllPageable = (page, items, deviceId) => {
+  const request = axios.get(`${baseUrl}/paginated?page=${page-1}&items=${items}&deviceId=${deviceId}`)
   return request.then(response => response.data)
 }
 

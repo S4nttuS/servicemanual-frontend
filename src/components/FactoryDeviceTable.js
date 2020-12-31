@@ -1,35 +1,63 @@
-import React from 'react'
+import React, { useState } from 'react'
 import FactoryDevice from '../components/FactoryDevice'
-import { Table } from 'semantic-ui-react'
+import { Table, Container, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import { getAllFactoryDevicesPageable } from '../reducers/factoryDeviceReducer'
+import TablePagination from './TablePagination'
 
-const FactoryDeviceTable = ({ factoryDevices }) => {
+const FactoryDeviceTable = ({ 
+  factoryDevices,
+  totalPages,
+  getAllFactoryDevicesPageable
+}) => {
+  const [page, setPage] = useState(1)
+  const [pageDropdown, setPageDropdown] = useState(5)
+
   return (
-    <Table>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>Id</Table.HeaderCell>
-          <Table.HeaderCell>Name</Table.HeaderCell>
-          <Table.HeaderCell>Type</Table.HeaderCell>
-          <Table.HeaderCell>Year</Table.HeaderCell>
-          <Table.HeaderCell></Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {factoryDevices.map(m =>
-          <FactoryDevice key={m.id} factoryDevice={m} />
-        )}
-      </Table.Body>
-    </Table>
+    <Container>
+      <Header as="h2">Factory Devices</Header>
+
+      <Table>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Id</Table.HeaderCell>
+            <Table.HeaderCell>Name</Table.HeaderCell>
+            <Table.HeaderCell>Type</Table.HeaderCell>
+            <Table.HeaderCell>Year</Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {factoryDevices.map(m =>
+            <FactoryDevice key={m.id} factoryDevice={m} />
+          )}
+        </Table.Body>
+      </Table>
+
+      <TablePagination
+        page={page}
+        setPage={setPage}
+        pageDropdown={pageDropdown}
+        setPageDropdown={setPageDropdown}
+        totalPages={totalPages} 
+        getAllPageable={getAllFactoryDevicesPageable}
+        id={-1}
+      />
+    </Container>
   )
 }
 
 const mapStateToProps = (state) => {
   return {
-    factoryDevices: state.factoryDevices
+    factoryDevices: state.factoryDevices.factoryDevices,
+    totalPages: state.factoryDevices.totalPages
   }
 }
 
+const mapDispatchToProps = {
+  getAllFactoryDevicesPageable
+}
+
 export default connect(
-  mapStateToProps
+  mapStateToProps, mapDispatchToProps
 )(FactoryDeviceTable)

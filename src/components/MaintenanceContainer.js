@@ -37,7 +37,7 @@ const MaintenanceContainer = ({maintenances}) => {
 
 const mapStateToProps = state => {
   return {
-    maintenances: state.maintenances
+    maintenances: state.maintenances.maintenances
   }
 }
 

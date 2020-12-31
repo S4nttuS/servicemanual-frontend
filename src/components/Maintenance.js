@@ -14,8 +14,8 @@ const Maintenance = ({ maintenance, deleteMaintenance }) => {
   }
 
   return (
-    <Table.Row onClick={() => window.location.href= `/maintenances/${maintenance.id}` }>
-      <Table.Cell>
+    <Table.Row>
+      <Table.Cell onClick={() => window.location.href= `/maintenances/${maintenance.id}`} style={{ cursor: 'pointer' }}>
           {maintenance.id}
       </Table.Cell>
       <Table.Cell>
