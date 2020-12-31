@@ -14,6 +14,11 @@ Then cd into right directory of frontend project and use commands
 
 Frontend opens to http://localhost:3000/ and backend is in http://localhost:8080/
 
+**Added in December 2020:**
+
+Single-page app features
+
+Paging to maintenances
 
 ## Built with
 * React
