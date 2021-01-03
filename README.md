@@ -18,7 +18,7 @@ Clone and start backend project, instructions can be found [here](https://github
 Then cd into right directory of frontend project and use commands 
 ```npm install``` and ```npm start```
 
-Frontend opens to http://localhost:3000/ and backend is in http://localhost:8080/
+Frontend opens to http://localhost:3000/ and backend is at http://localhost:8080/
 
 ## Built with
 * React
