@@ -18,6 +18,8 @@ Clone and start backend project, instructions can be found [here](https://github
 Then cd into right directory of frontend project and use commands 
 ```npm install``` and ```npm start```
 
+There is a short introduction video called: ```servicemanual.mp4``` that demonstrates key functionalities of the application.
+
 Frontend opens to http://localhost:3000/ and backend is at http://localhost:8080/
 
 ## Built with
