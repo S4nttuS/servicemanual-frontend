@@ -1,6 +1,13 @@
 import axios from 'axios'
 const baseUrl = 'http://localhost:8080/maintenances'
 
+const getOne = (id) => {
+  const request = axios.get(`${baseUrl}/${id}`)
+  return request
+    .then(response => response.data)
+    .catch(error => console.log(`Maintenance with id ${id} not found`))
+}
+
 const getAll = () => {
   const request = axios.get(baseUrl)
   return request.then(response => response.data)
@@ -31,4 +38,4 @@ const deleteMaintenance = async id => {
   return response.data
 }
 
-export default { getAll, getAllPageable, getByDeviceId, create, update, deleteMaintenance }
+export default { getOne, getAll, getAllPageable, getByDeviceId, create, update, deleteMaintenance }

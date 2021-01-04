@@ -1,11 +1,13 @@
 import maintenanceService from '../services/maintenances'
 
-const maintenanceReducer = (state = { maintenances: [], totalPages: 0 }, action) => {
+const maintenanceReducer = (state = { maintenances: [], totalPages: 0, maintenance: {} }, action) => {
   switch (action.type) {
+    case 'ONE_MAINTENANCE':
+      return { ...state, maintenance: action.data }
   case 'ALL_MAINTENANCES':
     return { ...state, maintenances: action.data }
   case 'ALL_MAINTENANCES_PAGEABLE':
-    return { maintenances: action.data.content, totalPages: action.data.totalPages }
+    return { ...state, maintenances: action.data.content, totalPages: action.data.totalPages }
   case 'ALL_MAINTENANCES_BY_DEVICE':
     return { ...state, maintenances: action.data }
   case 'NEW_MAINTENANCE':
@@ -15,9 +17,24 @@ const maintenanceReducer = (state = { maintenances: [], totalPages: 0 }, action)
       .map(maintenance => maintenance.id === action.data.id ? action.data : maintenance)
     }
   case 'DELETE_MAINTENANCE':
-    return { ...state, maintenances: state.maintenances.filter(maintenance => maintenance.id !== action.data) }
+    return { 
+      ...state, 
+      maintenances: state.maintenances.filter(maintenance => maintenance.id !== action.data),
+      maintenance: state.maintenance.id === action.data ? undefined : state.maintenance 
+    }
   default:
     return state
+  }
+}
+
+export const getMaintenance = (id) => {
+  return async dispatch => {
+    const maintenance = await maintenanceService.getOne(id)
+
+    dispatch({
+      type: 'ONE_MAINTENANCE',
+      data: maintenance
+    })
   }
 }
 

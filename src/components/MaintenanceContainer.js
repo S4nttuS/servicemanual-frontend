@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Maintenance from '../components/Maintenance'
 import { connect } from 'react-redux'
 import { Table, } from 'semantic-ui-react'
 import { useParams } from "react-router-dom";
+import { getMaintenance } from '../reducers/maintenanceReducer'
 
-const MaintenanceContainer = ({maintenances}) => {
+const MaintenanceContainer = ({ maintenance, getMaintenance }) => {
   const { id } = useParams();
-  const maintenance = maintenances.find(m => m.id == id);
+
+  useEffect(() => {
+    getMaintenance(id)
+  }, [])
 
   if (maintenance !== undefined) {
     return (
@@ -37,11 +41,15 @@ const MaintenanceContainer = ({maintenances}) => {
 
 const mapStateToProps = state => {
   return {
-    maintenances: state.maintenances.maintenances
+    maintenance: state.maintenances.maintenance
   }
+}
+
+const mapDispatchToProps = {
+  getMaintenance
 }
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(MaintenanceContainer)
