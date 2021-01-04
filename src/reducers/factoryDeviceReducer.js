@@ -7,7 +7,7 @@ const factoryDeviceReducer = (state = { factoryDevices: [], totalPages: 0, ids: 
   case 'ALL_FACTORYDEVICES_PAGEABLE':
     return { ...state, factoryDevices: action.data.content, totalPages: action.data.totalPages }
   case 'NEW_FACTORYDEVICE':
-    return { ...state, factoryDevices: action.data }
+    return { ...state, factoryDevices: state.factoryDevices.concat(action.data) }
   case 'UPDATE_FACTORYDEVICE':
     return { ...state, factoryDevices: state.factoryDevices
       .map(factoryDevice => factoryDevice.id === action.data.id ? action.data : factoryDevice)

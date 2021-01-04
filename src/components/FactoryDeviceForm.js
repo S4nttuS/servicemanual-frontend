@@ -1,10 +1,10 @@
 import React from 'react'
-import { createFactoryDevice } from '../reducers/factoryDeviceReducer'
+import { createFactoryDevice, getAllFactoryDevicesPageable } from '../reducers/factoryDeviceReducer'
 import { Form, Container, Header, Button } from 'semantic-ui-react'
 import { useField } from '../hooks'
 import { connect } from 'react-redux'
 
-const FactoryDeviceForm = ({createFactoryDevice}) => {
+const FactoryDeviceForm = ({ createFactoryDevice, getAllFactoryDevicesPageable }) => {
   const name = useField('text')
   const type = useField('text')
   const year = useField('number')
@@ -20,6 +20,7 @@ const FactoryDeviceForm = ({createFactoryDevice}) => {
     }
 
     await createFactoryDevice(factoryDeviceObject)
+    getAllFactoryDevicesPageable(1, 5)
     name.reset()
     type.reset()
     year.reset()
@@ -49,7 +50,8 @@ const FactoryDeviceForm = ({createFactoryDevice}) => {
 }
 
 const mapDispatchToProps = {
-  createFactoryDevice
+  createFactoryDevice,
+  getAllFactoryDevicesPageable
 }
 
 export default connect(

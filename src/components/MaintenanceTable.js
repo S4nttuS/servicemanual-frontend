@@ -50,7 +50,13 @@ const MaintenanceTable = ({
         </Table.Header>
         <Table.Body >
           {maintenances.map(m =>
-            <Maintenance key={m.id} maintenance={m} />
+            <Maintenance
+              key={m.id} 
+              maintenance={m} 
+              page={page}
+              pageDropdown={pageDropdown}
+              id={dropdown}
+            />
           )}
         </Table.Body>
       </Table>

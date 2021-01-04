@@ -28,8 +28,13 @@ const FactoryDeviceTable = ({
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {factoryDevices.map(m =>
-            <FactoryDevice key={m.id} factoryDevice={m} />
+          {factoryDevices.map(f =>
+            <FactoryDevice 
+              key={f.id} 
+              factoryDevice={f}
+              page={page}
+              pageDropdown={pageDropdown} 
+            />
           )}
         </Table.Body>
       </Table>

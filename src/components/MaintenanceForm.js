@@ -1,10 +1,10 @@
 import React from 'react'
-import { createMaintenance } from '../reducers/maintenanceReducer'
-import { Form, Header, Button } from 'semantic-ui-react'
+import { createMaintenance, getAllMaintenancesPageable } from '../reducers/maintenanceReducer'
+import { Form, Header, Button} from 'semantic-ui-react'
 import { useField } from '../hooks'
 import { connect } from 'react-redux'
 
-const MaintenanceForm = ({ createMaintenance }) => {
+const MaintenanceForm = ({ createMaintenance, getAllMaintenancesPageable }) => {
   const deviceId = useField('number')
   const entryDate = useField('date')
   const description = useField('text')
@@ -24,6 +24,7 @@ const MaintenanceForm = ({ createMaintenance }) => {
     }
 
     await createMaintenance(maintenanceObject)
+    getAllMaintenancesPageable(1, 5, 0)
     deviceId.reset()
     entryDate.reset()
     description.reset()
@@ -60,7 +61,8 @@ const MaintenanceForm = ({ createMaintenance }) => {
 }
 
 const mapDispatchToProps = {
-  createMaintenance
+  createMaintenance,
+  getAllMaintenancesPageable
 }
 
 export default connect(

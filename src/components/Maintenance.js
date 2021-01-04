@@ -1,15 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { deleteMaintenance } from '../reducers/maintenanceReducer'
+import { deleteMaintenance, getAllMaintenancesPageable } from '../reducers/maintenanceReducer'
 import { Table, Button, Modal } from 'semantic-ui-react'
 import Moment from 'react-moment';
 import MaintenanceEdit from '../components/MaintenanceEdit'
 
-const Maintenance = ({ maintenance, deleteMaintenance }) => {
-  const handleDelete = () => {
+const Maintenance = ({ 
+  maintenance, 
+  page,
+  pageDropdown,
+  id,
+  deleteMaintenance, 
+  getAllMaintenancesPageable
+}) => {
+  const handleDelete = async () => {
     if (window.confirm(`Delete maintenance job ${maintenance.id}?`) === true) {
       console.log(`Deleting a maintenance job ${maintenance.id}`)
-      deleteMaintenance(maintenance.id)
+      await deleteMaintenance(maintenance.id)
+      getAllMaintenancesPageable(page, pageDropdown, id)
     }
   }
 
@@ -46,7 +54,8 @@ const Maintenance = ({ maintenance, deleteMaintenance }) => {
 }
 
 const mapDispatchToProps = {
-  deleteMaintenance
+  deleteMaintenance,
+  getAllMaintenancesPageable
 }
 
 export default connect(

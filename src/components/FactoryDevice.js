@@ -1,14 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { deleteFactoryDevice } from '../reducers/factoryDeviceReducer'
+import { deleteFactoryDevice, getAllFactoryDevicesPageable } from '../reducers/factoryDeviceReducer'
 import { Table, Button, Modal } from 'semantic-ui-react'
 import FactoryDeviceEdit from '../components/FactoryDeviceEdit'
 
-const FactoryDevice = ({ factoryDevice, deleteFactoryDevice }) => {
-  const handleDelete = () => {
+const FactoryDevice = ({ 
+  factoryDevice, 
+  page,
+  pageDropdown,
+  deleteFactoryDevice, 
+  getAllFactoryDevicesPageable 
+}) => {
+  const handleDelete = async () => {
     if (window.confirm(`Delete a factory device ${factoryDevice.id}?`) === true) {
       console.log(`Deleting a factory device ${factoryDevice.id}`)
-      deleteFactoryDevice(factoryDevice.id)
+      await deleteFactoryDevice(factoryDevice.id)
+      getAllFactoryDevicesPageable(page, pageDropdown)
     }
   }
 
@@ -39,7 +46,8 @@ const FactoryDevice = ({ factoryDevice, deleteFactoryDevice }) => {
 }
 
 const mapDispatchToProps = {
-  deleteFactoryDevice
+  deleteFactoryDevice,
+  getAllFactoryDevicesPageable
 }
 
 export default connect(
