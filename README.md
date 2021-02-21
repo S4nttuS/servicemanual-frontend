@@ -23,7 +23,7 @@ There is a short introduction video called: ```servicemanual.mp4``` that demonst
 Frontend opens to http://localhost:3000/ and backend is at http://localhost:8080/
 
 ## What could be done
-Errorhandling for wrong inputs etc.
+Error handling for wrong inputs etc.
 
 
 ## Built with
